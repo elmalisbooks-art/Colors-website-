@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10172f">
+  <title>Colors — Make Life Brighter</title>
+  <style>
+    :root {
+      --bg: #0b1226;
+      --panel: #121f3d;
+      --panel-light: #1a2b4d;
+      --text: #f7f8ff;
+      --muted: #c4cce0;
+      --pink: #f05acb;
+      --purple: #8b5cf6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .container { width: min(1100px, 92%); margin: auto; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(8, 15, 33, .94);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(12px);
+    }
+    .nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 850; letter-spacing: -.5px; }
+    .brand-mark { width: 32px; height: 32px; border-radius: 50% 42% 50% 40%; background: conic-gradient(#ffca45, #ff4fa3, #7d4dff, #12d9da, #55df70, #ffca45); box-shadow: 0 0 24px #8b5cf655; }
+    .nav-links { display: flex; align-items: center; gap: 25px; font-size: .92rem; color: #e1e5f5; }
+    .nav-links a:hover { color: #ff8bd9; }
+    .pill, .button {
+      border: 0; border-radius: 999px; padding: 11px 19px; color: white; font-weight: 750;
+      background: linear-gradient(110deg, #884bff, #ef5bc8);
+      box-shadow: 0 8px 25px #a24cff28;
+      transition: transform .2s, filter .2s;
+    }
+    .pill:hover, .button:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .hero {
+      background: linear-gradient(115deg, #1e55f5 0%, #a21caf 29%, #ff554f 53%, #ffc928 73%, #08cba4 100%);
+      overflow: hidden;
+    }
+    .hero-inner { min-height: 300px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 30px; align-items: center; padding: 42px 0; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 2px; font-weight: 800; font-size: .78rem; }
+    h1 { font-size: clamp(2.5rem, 5.4vw, 4.2rem); line-height: 1.02; margin: 13px 0; letter-spacing: -2px; }
+    h1 span { color: #fff2a8; }
+    .hero p { max-width: 530px; margin: 0 0 22px; color: #fff; }
+    .hero-art { text-align: center; font-size: clamp(2.8rem, 6vw, 5.5rem); line-height: .98; font-weight: 950; font-style: italic; letter-spacing: -3px; text-shadow: 0 4px 20px #4b183544; transform: rotate(-5deg); }
+    .section { padding: 28px 0 32px; }
+    .section-heading { text-align: center; margin: 0 0 20px; }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0 0 3px; letter-spacing: -.7px; }
+    .sub { color: var(--muted); margin: 0; font-size: .95rem; }
+    .palette-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+    .color-card { background: var(--panel); border-radius: 13px; overflow: hidden; border: 1px solid #ffffff08; }
+    .swatch { height: 90px; }
+    .card-info { padding: 10px 12px 12px; }
+    .card-title { font-weight: 800; font-size: .9rem; }
+    .hex-line { display: flex; justify-content: space-between; align-items: center; gap: 5px; color: #d7deef; font-size: .82rem; }
+    .copy-btn { border: 0; background: transparent; color: white; padding: 4px; border-radius: 5px; }
+    .copy-btn:hover { background: #ffffff18; }
+    .tools-section { background: linear-gradient(120deg, #101b36, #111b33 55%, #10172f); }
+    .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .tool { padding: 18px; background: #ffffff05; border: 1px solid #ffffff12; border-radius: 16px; }
+    .tool-head { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+    .tool-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: linear-gradient(135deg, #5547f5, #9b4dff); font-size: 1.3rem; }
+    .tool h3 { margin: 0; font-size: 1rem; }
+    .tool p { margin: 2px 0 0; color: var(--muted); font-size: .83rem; }
+    .result-box { margin-top: 12px; display: flex; align-items: center; gap: 12px; padding: 9px; background: #ffffff09; border: 1px solid #ffffff17; border-radius: 12px; min-height: 66px; }
+    .result-swatch { width: 62px; height: 52px; border-radius: 9px; flex-shrink: 0; background: #06b6d4; }
+    .result-hex { font-weight: 800; flex: 1; }
+    .input-row { display: flex; gap: 8px; margin-top: 12px; }
+    input[type="text"] { width: 100%; min-width: 0; color: white; background: #0a1329; border: 1px solid #354567; border-radius: 9px; padding: 11px 12px; outline: none; }
+    input[type="text"]:focus { border-color: #b67aff; }
+    input[type="color"] { width: 100%; height: 58px; padding: 3px; margin-top: 10px; border: 1px solid #ffffff20; border-radius: 10px; background: #0a1329; cursor: pointer; }
+    .convert-output { margin-top: 10px; padding: 10px; background: #0a1329; border: 1px solid #ffffff17; border-radius: 10px; font-size: .83rem; overflow-wrap: anywhere; }
+    .convert-line { display: flex; justify-content: space-between; gap: 8px; padding: 3px 0; }
+    .convert-line span:first-child { color: var(--muted); }
+    .notice { color: #ffd6a0; font-size: .82rem; min-height: 1.2em; margin-top: 7px; }
+    .quote { margin: 0 auto 28px; padding: 18px 22px; border-radius: 15px; background: linear-gradient(100deg, #1b2b4c, #132747); display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .quote strong { display: block; margin-bottom: 2px; }
+    .quote p { margin: 0; color: #d9e1f2; font-size: .88rem; }
+    .quote blockquote { margin: 0; max-width: 300px; font-size: .84rem; font-style: italic; color: #e0e6f6; }
+    footer { padding: 20px 0 24px; text-align: center; background: #080f20; color: #cbd3e5; font-size: .85rem; }
+    footer strong { display: block; color: white; font-size: 1.15rem; }
+    .socials { display: flex; justify-content: center; gap: 16px; margin: 8px 0; }
+    .socials a:hover { color: #f779d0; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: #f7f8ff; color: #111827; padding: 10px 16px; border-radius: 999px; box-shadow: 0 8px 30px #0005; transition: .2s; z-index: 20; font-weight: 700; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    @media (max-width: 850px) {
+      .palette-grid { grid-template-columns: repeat(3, 1fr); }
+      .tools-grid { grid-template-columns: 1fr; }
+      .hero-inner { grid-template-columns: 1fr .8fr; }
+      .nav-links { gap: 13px; }
+    }
+    @media (max-width: 560px) {
+      .nav { padding: 12px 0; align-items: flex-start; flex-direction: column; }
+      .nav-links { width: 100%; justify-content: space-between; gap: 8px; font-size: .82rem; }
+      .nav-links .pill { padding: 8px 12px; }
+      .hero-inner { grid-template-columns: 1fr; padding: 38px 0; }
+      .hero-art { padding: 12px 0 5px; }
+      .palette-grid { grid-template-columns: repeat(2, 1fr); gap: 11px; }
+      .swatch { height: 75px; }
+      .quote { align-items: flex-start; flex-direction: column; }
+      .quote blockquote { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="#home"><span class="brand-mark"></span>Colors</a>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#colors">Colors</a>
+        <a href="#tools">Tools</a>
+        <a href="#about">About</a>
+        <a class="pill" href="#tools">Get Started</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div>
+          <div class="eyebrow">Explore · Create · Be inspired</div>
+          <h1>Colors Make<br><span>Life Brighter</span></h1>
+          <p>Discover beautiful color palettes, generate random colors, and find the perfect shades for your next project.</p>
+          <a class="button" href="#colors">Explore Colors &nbsp; →</a>
+        </div>
+        <div class="hero-art" aria-label="Good vibes only">Good Vibes<br>Only ✦</div>
+      </div>
+    </section>
+
+    <section class="section container" id="colors">
+      <div class="section-heading">
+        <h2>Popular Colors</h2>
+        <p class="sub">Beautiful colors for your next project</p>
+      </div>
+      <div class="palette-grid" id="paletteGrid"></div>
+    </section>
+
+    <section class="section tools-section" id="tools">
+      <div class="container">
+        <div class="section-heading" style="text-align:left">
+          <h2>Color Tools</h2>
+          <p class="sub">Generate, pick and convert colors easily.</p>
+        </div>
+        <div class="tools-grid">
+          <article class="tool">
+            <div class="tool-head">
+              <div class="tool-icon">🎨</div>
+              <div><h3>Random Color Generator</h3><p>Click the button to get a random color.</p></div>
+            </div>
+            <button class="button" id="generateBtn">Generate Color</button>
+            <div class="result-box">
+              <div class="result-swatch" id="randomSwatch"></div>
+              <div class="result-hex" id="randomHex">#06B6D4</div>
+              <button class="copy-btn" id="copyRandom" aria-label="Copy random color">▢</button>
+            </div>
+          </article>
+
+          <article class="tool">
+            <div class="tool-head">
+              <div class="tool-icon">🖌️</div>
+              <div><h3>Color Picker</h3><p>Choose a color or enter a hex code.</p></div>
+            </div>
+            <input type="text" id="hexInput" value="#8B5CF6" maxlength="7" aria-label="Hex color code" placeholder="#RRGGBB">
+            <input type="color" id="colorInput" value="#8b5cf6" aria-label="Choose a color">
+            <div class="result-box">
+              <div class="result-swatch" id="pickedSwatch" style="background:#8b5cf6"></div>
+              <div class="result-hex" id="pickedHex">#8B5CF6</div>
+              <button class="copy-btn" id="copyPicked" aria-label="Copy picked color">▢</button>
+            </div>
+            <div class="notice" id="pickerNotice" aria-live="polite"></div>
+          </article>
+
+          <article class="tool">
+            <div class="tool-head">
+              <div class="tool-icon">⇄</div>
+              <div><h3>Color Converter</h3><p>Convert a hex code into RGB and HSL.</p></div>
+            </div>
+            <div class="input-row">
+              <input type="text" id="convertInput" value="#3498db" maxlength="7" aria-label="Hex code to convert">
+              <button class="button" id="convertBtn">Convert</button>
+            </div>
+            <div class="convert-output" id="convertOutput">
+              <div class="convert-line"><span>HEX</span><strong id="outHex">#3498DB</strong><button class="copy-btn" data-copy="outHex" aria-label="Copy HEX">▢</button></div>
+              <div class="convert-line"><span>RGB</span><strong id="outRgb">rgb(52, 152, 219)</strong><button class="copy-btn" data-copy="outRgb" aria-label="Copy RGB">▢</button></div>
+              <div class="convert-line"><span>HSL</span><strong id="outHsl">hsl(204, 70%, 53%)</strong><button class="copy-btn" data-copy="outHsl" aria-label="Copy HSL">▢</button></div>
+            </div>
+            <div class="notice" id="convertNotice" aria-live="polite"></div>
+          </article>
+        </div>
+
+        <div class="quote" id="about" style="margin-top:22px">
+          <div><strong>Colors for a Better Tomorrow</strong><p>Colors can change your mood, inspire creativity, and make your ideas stand out.<br>Explore, experiment and find the perfect colors for your world.</p></div>
+          <blockquote>“Color is a power which directly influences the soul.”<br><small>— Wassily Kandinsky</small></blockquote>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Colors</strong>
+    <div class="socials"><a href="#home" aria-label="Facebook">●</a><a href="#home" aria-label="Twitter">♥</a><a href="#home" aria-label="Instagram">◎</a><a href="#home" aria-label="YouTube">▶</a></div>
+    <div>© <span id="year"></span> Colors. All rights reserved.</div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied!</div>
+
+  <script>
+    const colors = [
+      {name:"Blue", hex:"#3B82F6"},
+      {name:"Purple", hex:"#8B5CF6"},
+      {name:"Pink", hex:"#EC4899"},
+      {name:"Orange", hex:"#F97316"},
+      {name:"Green", hex:"#22C55E"},
+      {name:"Yellow", hex:"#EAB308"}
+    ];
+
+    const paletteGrid = document.getElementById("paletteGrid");
+    colors.forEach(color => {
+      const card = document.createElement("article");
+      card.className = "color-card";
+      card.innerHTML = `
+        <div class="swatch" style="background:${color.hex}"></div>
+        <div class="card-info">
+          <div class="card-title">${color.name}</div>
+          <div class="hex-line"><span>${color.hex}</span>
+            <button class="copy-btn palette-copy" data-hex="${color.hex}" aria-label="Copy ${color.name} hex">▢</button>
+          </div>
+        </div>`;
+      paletteGrid.appendChild(card);
+    });
+
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 1600);
+    }
+    async function copyText(value) {
+      try {
+        await navigator.clipboard.writeText(value);
+        showToast("Copied " + value);
+      } catch (err) {
+        const field = document.createElement("textarea");
+        field.value = value;
+        document.body.appendChild(field);
+        field.select();
+        const ok = document.execCommand("copy");
+        field.remove();
+        showToast(ok ? "Copied " + value : "Copy not available — select the text");
+      }
+    }
+    function randomHex() {
+      return "#" + Math.floor(Math.random() * 16777216).toString(16).padStart(6, "0").toUpperCase();
+    }
+    document.getElementById("generateBtn").addEventListener("click", () => {
+      const hex = randomHex();
+      document.getElementById("randomSwatch").style.background = hex;
+      document.getElementById("randomHex").textContent = hex;
+    });
+    document.getElementById("copyRandom").addEventListener("click", () => copyText(document.getElementById("randomHex").textContent));
+
+    const hexInput = document.getElementById("hexInput");
+    const colorInput = document.getElementById("colorInput");
+    function validHex(value) { return /^#[0-9a-fA-F]{6}$/.test(value.trim()); }
+    function updatePicker(hex) {
+      hex = hex.toUpperCase();
+      hexInput.value = hex;
+      colorInput.value = hex.toLowerCase();
+      document.getElementById("pickedSwatch").style.background = hex;
+      document.getElementById("pickedHex").textContent = hex;
+      document.getElementById("pickerNotice").textContent = "";
+    }
+    colorInput.addEventListener("input", () => updatePicker(colorInput.value));
+    hexInput.addEventListener("input", () => {
+      if (validHex(hexInput.value)) updatePicker(hexInput.value);
+      else document.getElementById("pickerNotice").textContent = "Enter a valid hex code, e.g. #FF8800.";
+    });
+    document.getElementById("copyPicked").addEventListener("click", () => copyText(document.getElementById("pickedHex").textContent));
+
+    function convertHex(hex) {
+      if (!validHex(hex)) return null;
+      const value = hex.trim().slice(1);
+      const r = parseInt(value.slice(0,2),16), g = parseInt(value.slice(2,4),16), b = parseInt(value.slice(4,6),16);
+      const rn = r/255, gn = g/255, bn = b/255;
+      const max = Math.max(rn,gn,bn), min = Math.min(rn,gn,bn);
+      let h = 0, s = 0, l = (max+min)/2;
+      if (max !== min) {
+        const d = max-min;
+        s = l > .5 ? d/(2-max-min) : d/(max+min);
+        switch(max) {
+          case rn: h = (gn-bn)/d + (gn < bn ? 6 : 0); break;
+          case gn: h = (bn-rn)/d + 2; break;
+          default: h = (rn-gn)/d + 4;
+        }
+        h *= 60;
+      }
+      return {hex:"#"+value.toUpperCase(), rgb:`rgb(${r}, ${g}, ${b})`, hsl:`hsl(${Math.round(h)}, ${Math.round(s*100)}%, ${Math.round(l*100)}%)`};
+    }
+    document.getElementById("convertBtn").addEventListener("click", () => {
+      const result = convertHex(document.getElementById("convertInput").value);
+      const notice = document.getElementById("convertNotice");
+      if (!result) { notice.textContent = "Please enter a valid 6-digit hex code, e.g. #3498DB."; return; }
+      document.getElementById("outHex").textContent = result.hex;
+      document.getElementById("outRgb").textContent = result.rgb;
+      document.getElementById("outHsl").textContent = result.hsl;
+      notice.textContent = "";
+    });
+    document.getElementById("convertInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") document.getElementById("convertBtn").click();
+    });
+    document.addEventListener("click", e => {
+      const paletteButton = e.target.closest(".palette-copy");
+      if (paletteButton) copyText(paletteButton.dataset.hex);
+      const outputButton = e.target.closest("[data-copy]");
+      if (outputButton) copyText(document.getElementById(outputButton.dataset.copy).textContent);
+    });
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
